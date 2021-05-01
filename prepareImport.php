@@ -17,7 +17,7 @@ foreach ($gpx->wpt as $pt) {
     $wpt->addAttribute('lat', (string) $pt['lat']);
     $wpt->addAttribute('lon', (string) $pt['lon']);
     $wpt->addChild('name', (string) htmlspecialchars($pt->name));
-    $wpt->addChild('type', (string) $pt->type);
+    $wpt->addChild('type', (string) htmlspecialchars($pt->type));
     print((string) $pt->name . '<br>');
   }
 }

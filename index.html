@@ -33,6 +33,24 @@
         accessToken: 'pk.eyJ1IjoibTByY2gzbCIsImEiOiJjazR5a21kODkwMWZzM2ZxdW9neTlyNWF2In0.meiHG49gkd3-86AkMrP0qg'
       }).addTo(mymap);
 
+      async function parseWaypoints() {
+        if (window.DOMParser) {
+          parser=new DOMParser();
+          response = await fetch('./waypoints.gpx');
+          if (response.ok){
+            let txt = await response.text()
+            xmlDoc=parser.parseFromString(txt,"text/xml");
+            const items = xmlDoc.getElementsByTagName('wpt');
+            
+            Array.from(items).forEach(item => {
+              L.marker([item.attributes.lat.value, item.attributes.lon.value]).addTo(mymap);
+            })
+
+          }
+        }
+      }
+      parseWaypoints();
+
     </script>
   </body>
 </html>
