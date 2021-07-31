@@ -12,11 +12,9 @@ echo ('<pre>');
 // new xml object
 $newXML = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8' standalone='yes' ?><gpx></gpx>");
 
+//sorting function
 function cmp($a, $b)
 {
-  if ($a == $b) {
-    return 0;
-  }
   return strcmp(($a['year'] . $a['month'] . $a['day']), ($b['year'] . $b['month'] . $b['day']));
 }
 

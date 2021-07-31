@@ -8,7 +8,7 @@ I'm using [OsmAnd](https://play.google.com/store/apps/details?id=net.osmand.plus
 
 ## Configuration
 
-In the file `prepareImport.php` it is necessary to type in the names of the waypoint categories you wish to be shown on the map.
+In the file `import.php` it is necessary to type in the names of the waypoint categories you wish to be shown on the map.
 
 You need an own access token from mapbox.com. Put it in the `tileLayer` section of `index.html`.
 
