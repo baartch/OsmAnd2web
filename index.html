@@ -25,7 +25,7 @@
   <div id="mapid"></div>
 
   <script>
-    var mymap = L.map('mapid').setView([46.821, 8.223], 8);
+    var mymap = L.map('mapid');
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -48,6 +48,7 @@
       transform: rotate(45deg);
       border: 1px solid #FFFFFF`
 
+
     async function parseWaypoints() {
       if (window.DOMParser) {
         parser = new DOMParser();
@@ -56,13 +57,14 @@
           xmlDoc = parser.parseFromString(await response.text(), "text/xml");
           const waypoints = xmlDoc.getElementsByTagName('wpt');
           const wps = Array.from(waypoints);
-          //const colorStep = 0xFFFFFF / wps.length;
           const colorStep = 255 / wps.length;
+
+          let mapCenter = [];
+
           wps.forEach((wpt, idx) => {
 
             //const myCustomColour = Math.floor((idx + 1) * colorStep).toString(16);
             const color = 255 - Math.round((idx + 1) * colorStep);
-            console.log(color);
 
             const icon = L.divIcon({
               className: "my-custom-pin",
@@ -79,7 +81,13 @@
             if (idx == waypoints.lenght - 1) {
               pop.openPopup();
             }
-          })
+
+            //remember the last waypoint coordinates
+            mapCenter = [wpt.attributes.lat.value, wpt.attributes.lon.value];
+          });
+
+          //set the map center to to latest waypoint
+          mymap.setView(mapCenter, 8);
 
         }
       }
